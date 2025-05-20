@@ -4,7 +4,7 @@ An automated ticketing system that processes user queries from multiple platform
 
 ## 🧱 Project Structure
 
-- `backend/` — Spring Boot application (your contribution)
+- `backend/` — Spring Boot application (my contribution)
 - `frontend/` — React application for UI
 - `python-bot/` — Python scripts for email/WhatsApp automation and classification
 
@@ -20,7 +20,7 @@ I was responsible for designing and developing the `backend/` module using Sprin
 
 ## 🔧 Tech Stack (Backend)
 
-- Java 17
+- Java 21
 - Spring Boot
 - PostgreSQL
 - Maven
