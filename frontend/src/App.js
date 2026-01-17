@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Link, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
 import TicketsPage from './TicketsPage';
@@ -10,73 +10,40 @@ import step2 from './assets/step2.png';
 import step3 from './assets/step3.png';
 import hero from './assets/hero.png';
 import 'bootstrap-icons/font/bootstrap-icons.css';
-import { SignIn, SignUp, SignedIn, SignedOut, UserButton, useUser } from "@clerk/clerk-react";
-
-// Sign In Page
-function SignInPage() {
-  return (
-    <div className="container mt-5 d-flex justify-content-center">
-      <div className="card p-4 shadow" style={{ maxWidth: '500px' }}>
-        <h2 className="text-center mb-4">Sign In to ResolveRight</h2>
-        <SignIn redirectUrl="/" />
-      </div>
-    </div>
-  );
-}
-
-// Sign Up Page
-function SignUpPage() {
-  return (
-    <div className="container mt-5 d-flex justify-content-center">
-      <div className="card p-4 shadow" style={{ maxWidth: '500px' }}>
-        <h2 className="text-center mb-4">Sign Up for ResolveRight</h2>
-        <SignUp redirectUrl="/" />
-      </div>
-    </div>
-  );
-}
-
-// Protected Route Wrapper
-function ProtectedRoute({ children }) {
-  const { isSignedIn, isLoaded } = useUser();
-  if (!isLoaded) return <div>Loading...</div>;
-  if (!isSignedIn) return <Navigate to="/sign-in" />;
-  return children;
-}
 
 // Shared Header Component
 function Header() {
-  const { isSignedIn } = useUser();
-  
   return (
-    <header className="header-strip">
-      <div className="container d-flex justify-content-between align-items-center">
-        {/* Logo + Brand Title */}
-        <div className="d-flex align-items-center">
-          <img src={logo} alt="Logo" className="logo" />
-          <Link to="/" className="text-decoration-none">
-            <h1 className="brand-title mb-0 text-dark">ResolveRight</h1>
-          </Link>
-        </div>
+    <header className="header-strip shadow-sm">
+      <div className="container">
+        <div className="row align-items-center py-2">
+          {/* Logo + Brand */}
+          <div className="col-md-4">
+            <div className="d-flex align-items-center">
+              <img src={logo} alt="ResolveRight Logo" className="logo me-3" />
+              <Link to="/" className="text-decoration-none">
+                <div>
+                  <h1 className="brand-title mb-0">ResolveRight</h1>
+                  <p className="brand-tagline mb-0">AI-Powered Support</p>
+                </div>
+              </Link>
+            </div>
+          </div>
 
-        {/* Menu + Auth Button */}
-        <div className="d-flex align-items-center gap-4">
-          <nav className="menu-box d-flex align-items-center">
-            <Link to="/" className="menu-link">Home</Link>
-            <a href="#about" className="menu-link">About</a>
-            <Link to="/tickets" className="menu-link">Tickets</Link>
-            <a href="#more" className="menu-link">More</a>
-            <a href="#contact" className="menu-link">Contact Us</a>
-          </nav>
-
-          <SignedIn>
-            <UserButton afterSignOutUrl="/" />
-          </SignedIn>
-          <SignedOut>
-            <Link to="/sign-in">
-              <button className="login-btn">Login/Signup <i className="bi bi-box-arrow-in-right me-2"></i></button>
-            </Link>
-          </SignedOut>
+          {/* Navigation */}
+          <div className="col-md-8">
+            <nav className="d-flex justify-content-end align-items-center gap-1">
+              <Link to="/" className="nav-link-custom">
+                <i className="bi bi-house-door me-2"></i>Home
+              </Link>
+              <Link to="/tickets" className="nav-link-custom">
+                <i className="bi bi-ticket-perforated me-2"></i>Tickets
+              </Link>
+              <a href="#contact" className="nav-link-custom">
+                <i className="bi bi-envelope me-2"></i>Contact
+              </a>
+            </nav>
+          </div>
         </div>
       </div>
     </header>
@@ -124,8 +91,8 @@ function HomePage() {
           </h2>
           <div className="row mb-5 gx-4">
             {[{ src: step1, title: "Step 1: Auto-Classification" },
-              { src: step2, title: "Step 2: Precision Routing" },
-              { src: step3, title: "Step 3: Fast Resolution" }].map((step, index) => (
+            { src: step2, title: "Step 2: Precision Routing" },
+            { src: step3, title: "Step 3: Fast Resolution" }].map((step, index) => (
               <div className="col-md-4 mb-4" key={index}>
                 <div className="p-3 border rounded bg-white shadow-sm h-100 d-flex flex-column align-items-center text-center">
                   <img src={step.src} alt={step.title} className="img-fluid rounded mb-3" style={{ maxHeight: '220px', objectFit: 'cover' }} />
@@ -137,7 +104,9 @@ function HomePage() {
           <div className="row align-items-center">
             <div className="col-md-8">
               <p className="mb-0 text-start">
-                ResolveRight uses AI to analyze and auto-assign tickets from multiple channels. Watch the demo to see how easily your support workflow gets optimized.
+                ResolveRight uses AI to analyze and auto-assign tickets from multiple channels.
+                <br />
+                <strong>Try it now:</strong> Send an email to <a href="mailto:resolverright4@gmail.com" className="fw-bold text-decoration-none">resolverright4@gmail.com</a> to see it in action!
               </p>
             </div>
             <div className="col-md-4 text-md-end mt-3 mt-md-0">
@@ -186,11 +155,82 @@ function HomePage() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-dark text-light py-5">
+      {/* Footer - Contact Section */}
+      <footer id="contact" className="bg-dark text-light py-5">
         <div className="container">
-          {/* ... footer content stays unchanged ... */}
-          {/* You can keep your footer content the same here */}
+          <div className="row">
+            {/* Company Info */}
+            <div className="col-md-4 mb-4">
+              <h5 className="mb-3">
+                <i className="bi bi-gear-fill me-2"></i>ResolveRight
+              </h5>
+              <p className="text-muted">
+                AI-powered support automation platform delivering intelligent issue classification and precision routing.
+              </p>
+              <div className="social-links mt-3">
+                <a href="#" className="text-light me-3" title="LinkedIn">
+                  <i className="bi bi-linkedin fs-4"></i>
+                </a>
+                <a href="#" className="text-light me-3" title="Twitter">
+                  <i className="bi bi-twitter fs-4"></i>
+                </a>
+                <a href="#" className="text-light me-3" title="GitHub">
+                  <i className="bi bi-github fs-4"></i>
+                </a>
+              </div>
+            </div>
+
+            {/* Quick Links */}
+            <div className="col-md-4 mb-4">
+              <h5 className="mb-3">Quick Links</h5>
+              <ul className="list-unstyled">
+                <li className="mb-2">
+                  <Link to="/" className="text-muted text-decoration-none">
+                    <i className="bi bi-chevron-right me-2"></i>Home
+                  </Link>
+                </li>
+                <li className="mb-2">
+                  <Link to="/tickets" className="text-muted text-decoration-none">
+                    <i className="bi bi-chevron-right me-2"></i>View Tickets
+                  </Link>
+                </li>
+                <li className="mb-2">
+                  <a href="#about" className="text-muted text-decoration-none">
+                    <i className="bi bi-chevron-right me-2"></i>About Us
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            {/* Contact Info */}
+            <div className="col-md-4 mb-4">
+              <h5 className="mb-3">Contact Us</h5>
+              <ul className="list-unstyled">
+                <li className="mb-2 text-muted">
+                  <i className="bi bi-envelope-fill me-2"></i>
+                  support@resolveright.com
+                </li>
+                <li className="mb-2 text-muted">
+                  <i className="bi bi-telephone-fill me-2"></i>
+                  +1 (555) 123-4567
+                </li>
+                <li className="mb-2 text-muted">
+                  <i className="bi bi-geo-alt-fill me-2"></i>
+                  San Francisco, CA
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          {/* Copyright */}
+          <hr className="bg-secondary my-4" />
+          <div className="row">
+            <div className="col-12 text-center text-muted">
+              <p className="mb-0">
+                © {new Date().getFullYear()} ResolveRight. All rights reserved.
+              </p>
+            </div>
+          </div>
         </div>
       </footer>
     </>
@@ -204,16 +244,7 @@ function App() {
       <Header />
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/sign-in" element={<SignInPage />} />
-        <Route path="/sign-up" element={<SignUpPage />} />
-        <Route 
-          path="/tickets" 
-          element={
-            <ProtectedRoute>
-              <TicketsPage />
-            </ProtectedRoute>
-          } 
-        />
+        <Route path="/tickets" element={<TicketsPage />} />
       </Routes>
     </Router>
   );

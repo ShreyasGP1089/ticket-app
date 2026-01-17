@@ -1,10 +1,10 @@
 {
-    "ticketId": "RSL-2121-1F6",
-    "message": "Bum bum bumurum bum bum\r\nTui tui\r\nTingting Tingting ting ting pom pom",
-    "category": "Product",
-    "confidence": 0.3204,
-    "senderEmail": "shama.g.palimar@gmail.com",
+    "ticketId": "RSL-8910-BB0",
+    "message": "Hello,\r\n\r\nI placed an order last week (Order #12345) but I haven't received it yet.\r\nThe tracking shows it was delivered 3 days ago, but there's nothing at my\r\ndoorstep.\r\n\r\nPlease help me locate my package.\r\n\r\nBest regards,\r\nSarah",
+    "category": "Delivery",
+    "confidence": 0.2001,
+    "senderEmail": "shreyasgpalimar04@gmail.com",
     "status": "Open",
-    "createdAt": "2025-04-13T18:55:22.649077",
+    "createdAt": "2026-01-16T02:52:58.956550",
     "resolvedAt": null
 }

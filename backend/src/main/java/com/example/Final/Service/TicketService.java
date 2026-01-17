@@ -4,6 +4,8 @@ package com.example.Final.Service;
 import com.example.Final.Model.ticket;
 import com.example.Final.Repository.TicketRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
@@ -26,6 +28,11 @@ public class TicketService {
 
     public List<ticket> gettickets() {
         return this.ticketRepo.findAll();
+    }
+
+    // Paginated method
+    public Page<ticket> getTicketsPageable(Pageable pageable) {
+        return this.ticketRepo.findAll(pageable);
     }
 
     public void delete(Long id) {
