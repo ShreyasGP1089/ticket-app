@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
 import axios from 'axios';
@@ -17,8 +17,8 @@ function TicketsPage() {
   const [totalPages, setTotalPages] = useState(0);
   const [totalElements, setTotalElements] = useState(0);
   const [pageSize, setPageSize] = useState(20);
-  const [sortBy, setSortBy] = useState("createdAt");
-  const [sortDirection, setSortDirection] = useState("DESC");
+  const [sortBy] = useState("createdAt");
+  const [sortDirection] = useState("DESC");
 
   // UI state
   const [loading, setLoading] = useState(true);
@@ -50,17 +50,24 @@ function TicketsPage() {
     setSelectedTicket(null);
   };
 
-  useEffect(() => {
-    fetchTickets();
-    fetchStats();
-  }, [currentPage, pageSize, sortBy, sortDirection]);
-
-  const showToast = (message, type = 'success') => {
+  const showToast = useCallback((message, type = 'success') => {
     setToast({ show: true, message, type });
     setTimeout(() => setToast({ show: false, message: '', type: '' }), 3000);
+  }, []);
+
+  const computeCategoryData = (tickets) => {
+    const counts = {};
+    tickets.forEach(ticket => {
+      counts[ticket.category] = (counts[ticket.category] || 0) + 1;
+    });
+    const data = Object.keys(counts).map(category => ({
+      name: category,
+      value: counts[category]
+    }));
+    setCategoryCounts(data);
   };
 
-  const fetchTickets = () => {
+  const fetchTickets = useCallback(() => {
     setLoading(true);
     setError(null);
     axios.get(`${API_BASE_URL}/tickets/paginated`, {
@@ -84,21 +91,9 @@ function TicketsPage() {
         setLoading(false);
         showToast('Failed to load tickets', 'error');
       });
-  };
+  }, [currentPage, pageSize, sortBy, sortDirection, showToast]);
 
-  const computeCategoryData = (tickets) => {
-    const counts = {};
-    tickets.forEach(ticket => {
-      counts[ticket.category] = (counts[ticket.category] || 0) + 1;
-    });
-    const data = Object.keys(counts).map(category => ({
-      name: category,
-      value: counts[category]
-    }));
-    setCategoryCounts(data);
-  };
-
-  const fetchStats = async () => {
+  const fetchStats = useCallback(async () => {
     try {
       const total = await axios.get(`${API_BASE_URL}/tickets/count`);
       const resolved = await axios.get(`${API_BASE_URL}/tickets/count/resolved`);
@@ -114,7 +109,12 @@ function TicketsPage() {
     } catch (error) {
       console.error("Error fetching stats:", error);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    fetchTickets();
+    fetchStats();
+  }, [fetchTickets, fetchStats]);
 
   const handleClose = async (ticketId) => {
     try {
@@ -451,15 +451,15 @@ function TicketsPage() {
                 AI-powered support automation platform delivering intelligent issue classification and precision routing.
               </p>
               <div className="social-links mt-3">
-                <a href="#" className="text-light me-3" title="LinkedIn">
+                <button onClick={() => window.open('https://linkedin.com', '_blank')} className="btn btn-link text-light me-3 p-0" title="LinkedIn" aria-label="LinkedIn">
                   <i className="bi bi-linkedin fs-4"></i>
-                </a>
-                <a href="#" className="text-light me-3" title="Twitter">
+                </button>
+                <button onClick={() => window.open('https://twitter.com', '_blank')} className="btn btn-link text-light me-3 p-0" title="Twitter" aria-label="Twitter">
                   <i className="bi bi-twitter fs-4"></i>
-                </a>
-                <a href="#" className="text-light me-3" title="GitHub">
+                </button>
+                <button onClick={() => window.open('https://github.com', '_blank')} className="btn btn-link text-light me-3 p-0" title="GitHub" aria-label="GitHub">
                   <i className="bi bi-github fs-4"></i>
-                </a>
+                </button>
               </div>
             </div>
 

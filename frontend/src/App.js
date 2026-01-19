@@ -168,15 +168,15 @@ function HomePage() {
                 AI-powered support automation platform delivering intelligent issue classification and precision routing.
               </p>
               <div className="social-links mt-3">
-                <a href="#" className="text-light me-3" title="LinkedIn">
+                <button onClick={() => window.open('https://linkedin.com', '_blank')} className="btn btn-link text-light me-3 p-0" title="LinkedIn" aria-label="LinkedIn">
                   <i className="bi bi-linkedin fs-4"></i>
-                </a>
-                <a href="#" className="text-light me-3" title="Twitter">
+                </button>
+                <button onClick={() => window.open('https://twitter.com', '_blank')} className="btn btn-link text-light me-3 p-0" title="Twitter" aria-label="Twitter">
                   <i className="bi bi-twitter fs-4"></i>
-                </a>
-                <a href="#" className="text-light me-3" title="GitHub">
+                </button>
+                <button onClick={() => window.open('https://github.com', '_blank')} className="btn btn-link text-light me-3 p-0" title="GitHub" aria-label="GitHub">
                   <i className="bi bi-github fs-4"></i>
-                </a>
+                </button>
               </div>
             </div>
 
