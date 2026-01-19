@@ -67,7 +67,7 @@ public class Controller {
         return new ResponseEntity(tickets, HttpStatus.OK);
     }
 
-    @GetMapping({"/{id}"})
+    @GetMapping({"/ticket/{id}"})
     public ResponseEntity<?> getTicketById(@PathVariable Long id) {
         Optional<ticket> ticketOptional = this.service.getTicketById(id);
         if(ticketOptional.isPresent()){
