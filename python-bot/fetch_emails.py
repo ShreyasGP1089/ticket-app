@@ -241,7 +241,7 @@ def process_emails():
         logger.info("Checking for new emails in inbox and spam...")
         mail = imaplib.IMAP4_SSL(IMAP_SERVER)
         mail.login(EMAIL_ACCOUNT, EMAIL_PASSWORD)
-        
+
         # Process inbox
         inbox_count = process_folder_emails(mail, "inbox")
         
